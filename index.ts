@@ -1,24 +1,40 @@
-import { chromium } from 'playwright'
-import notifier from 'node-notifier'
-import cron from 'node-cron'
+import { chromium } from "playwright";
+import notifier from "node-notifier";
+import cron from "node-cron";
+const TelegramBot = require("node-telegram-bot-api");
 
-cron.schedule("* * * * *", async () => {
-  console.log(`Running on: ${new Date().toLocaleString('es-AR', { timeZone: 'America/Buenos_Aires' })}`)
+const tokenFuncionamiento = "5747844050:AAGKvj-AtvJ1ZVfaAy7t46oOzVBZ2dlmlQo";
+const tokenNotificacion = "5542861904:AAEgRCpbxor5GK3i98iqYvzzL5dKp8HsAE4";
+const chatId = "297484210";
 
-  const browser = await chromium.launch()
-  const page = await browser.newPage()
-  await page.goto('https://www.zonakids.com/productos/pack-x-25-sobres-de-figuritas-fifa-world-cup-qatar-2022/')
+cron.schedule("0 */5 * * * *", async () => {
+  console.log(
+    `Running on: ${new Date().toLocaleString("es-AR", {
+      timeZone: "America/Buenos_Aires",
+    })}`
+  );
 
-  const content = await page.inputValue('#product_form input[type="submit"]')
+  const browser = await chromium.launch();
+  const page = await browser.newPage();
+  await page.goto(
+    "https://www.zonakids.com/productos/pack-x-25-sobres-de-figuritas-fifa-world-cup-qatar-2022/"
+  );
 
-  if (content === 'Sin stock') {
-    console.log('SIN STOCK')
+  const content = await page.inputValue('#product_form input[type="submit"]');
+
+  if (content === "Sin stock") {
+    const bot = new TelegramBot(tokenFuncionamiento, { polling: true });
+    bot.sendMessage(chatId, "Bot Funcionando",{
+      "disable_notification": true,
+  });
+    console.log("SIN STOCK");
+    bot.stopPolling();
   } else {
-    notifier.notify({
-      title: 'HAY FIGURITAS!!',
-      message: `Se detectó stock en el pack x25 sobres de Panini`
-    })
+    const bot = new TelegramBot(tokenNotificacion, { polling: true });
+    bot.sendMessage(chatId, "Ya hay figuritas, entra a: https://www.zonakids.com/productos/pack-x-25-sobres-de-figuritas-fifa-world-cup-qatar-2022/");
+    console.log("SIN STOCK");
+    bot.stopPolling();
   }
-  
-  await browser.close()
-})
+
+  await browser.close();
+});
