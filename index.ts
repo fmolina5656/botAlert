@@ -23,11 +23,12 @@ cron.schedule("0 */5 * * * *", async () => {
   const content = await page.inputValue('#product_form input[type="submit"]');
 
   if (content === "Sin stock") {
+    console.log("SIN STOCK");
     const bot = new TelegramBot(tokenFuncionamiento, { polling: true });
     bot.sendMessage(chatId, "Bot Funcionando",{
       "disable_notification": true,
   });
-    console.log("SIN STOCK");
+   
     bot.stopPolling();
   } else {
     const bot = new TelegramBot(tokenNotificacion, { polling: true });
