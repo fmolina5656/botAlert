@@ -9,7 +9,7 @@ const tokenNotificacion = "5542861904:AAEgRCpbxor5GK3i98iqYvzzL5dKp8HsAE4";
 const chatId = "297484210";
 
 try {
-  cron.schedule("* * * * * *", async () => {
+  cron.schedule(" * * * * *", async () => {
     console.log(
       `Running on: ${new Date().toLocaleString("es-AR", {
         timeZone: "America/Buenos_Aires",
