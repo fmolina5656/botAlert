@@ -2,13 +2,14 @@ import { chromium } from "playwright";
 import notifier from "node-notifier";
 import cron from "node-cron";
 const TelegramBot = require("node-telegram-bot-api");
+const puppeteer = require('puppeteer');
 
 const tokenFuncionamiento = "5747844050:AAGKvj-AtvJ1ZVfaAy7t46oOzVBZ2dlmlQo";
 const tokenNotificacion = "5542861904:AAEgRCpbxor5GK3i98iqYvzzL5dKp8HsAE4";
 const chatId = "297484210";
 
 try {
-  cron.schedule("0 */5 * * * *", async () => {
+  cron.schedule("* * * * * *", async () => {
     console.log(
       `Running on: ${new Date().toLocaleString("es-AR", {
         timeZone: "America/Buenos_Aires",
@@ -16,7 +17,7 @@ try {
     );
   
     console.log("antes");
-    const browser = await chromium.launch();
+    const browser = await puppeteer.launch({args: ['--no-sandbox']});
     const page = await browser.newPage();
     await page.goto(
       "https://www.zonakids.com/productos/pack-x-25-sobres-de-figuritas-fifa-world-cup-qatar-2022/"
