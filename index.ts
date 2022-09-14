@@ -19,6 +19,7 @@ try {
     console.log("antes");
     const browser = await puppeteer.launch({args: ['--no-sandbox']});
     const page = await browser.newPage();
+    console.log("antes1");
     await page.goto(
       "https://www.zonakids.com/productos/pack-x-25-sobres-de-figuritas-fifa-world-cup-qatar-2022/"
     );
