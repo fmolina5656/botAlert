@@ -18,6 +18,7 @@ try {
   
     console.log("antes");
     const browser = await puppeteer.launch({args: ['--no-sandbox']});
+    console.log("antes12");
     const page = await browser.newPage();
     console.log("antes1");
     await page.goto(
