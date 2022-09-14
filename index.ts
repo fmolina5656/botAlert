@@ -15,13 +15,14 @@ try {
       })}`
     );
   
-    
+    console.log("antes");
     const browser = await chromium.launch();
     const page = await browser.newPage();
     await page.goto(
       "https://www.zonakids.com/productos/pack-x-25-sobres-de-figuritas-fifa-world-cup-qatar-2022/"
     );
   
+    console.log("Despues");
     const content = await page.inputValue('#product_form input[type="submit"]');
   
     if (content === "Sin stock") {
